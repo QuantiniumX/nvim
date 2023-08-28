@@ -53,7 +53,10 @@ return require('packer').startup(function(use)
         end
     }
 
-    use 'tamton-aquib/staline.nvim'
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+    }
     use("nvim-treesitter/playground")
     use("theprimeagen/harpoon")
     use("theprimeagen/refactoring.nvim")
