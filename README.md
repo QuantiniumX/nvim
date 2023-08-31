@@ -1,2 +1,2 @@
 # nvim
-This is just mine nvim config for just easy copy paste if i shift machines
+This is just my nvim config for just easy copy paste if i shift machines
