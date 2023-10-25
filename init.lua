@@ -1,1 +1,2 @@
-require("quantinium")
+require("quantinium.main");
+require("quantinium.lazy");
