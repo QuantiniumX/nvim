@@ -4,8 +4,8 @@ vim.g.maplocalleader = ' '
 
 require("quantinium.lazy");
 require("quantinium.main.keymaps");
+require("quantinium.main.settings");
 require("quantinium.main");
-require("quantinium.main.settings")
 
 -- document existing key chains
 require('which-key').register {
