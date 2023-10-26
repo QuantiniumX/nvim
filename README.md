@@ -1,4 +1,4 @@
-#neovim dotfiles
+# neovim dotfiles
 
 Clone the repo to use it 
 ~~~
