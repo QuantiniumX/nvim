@@ -3,6 +3,8 @@ return {
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
+    "mfussenegger/nvim-dap",
+    "jay-babu/mason-nvim-dap.nvim",
   },
   config = function()
     -- import mason
@@ -12,6 +14,8 @@ return {
     local mason_lspconfig = require("mason-lspconfig")
 
     local mason_tool_installer = require("mason-tool-installer")
+
+    local mason_nvim_dap = require("mason-nvim-dap")
 
     -- enable mason and configure icons
     mason.setup({
@@ -41,11 +45,34 @@ return {
     mason_tool_installer.setup({
       ensure_installed = {
         "prettier", -- prettier formatter
-        "stylua", -- lua formatter
-        "isort", -- python formatter
-        "black", -- python formatter
-        "pylint", -- python linter
+        "stylua",   -- lua formatter
+        "isort",    -- python formatter
+        "black",    -- python formatter
+        "pylint",   -- python linter
         "eslint_d", -- js linter
+      },
+    })
+
+    mason_nvim_dap.setup({
+      ensure_installed = { 'stylua', 'jq' },
+      handlers = {
+        function(config)
+          -- all sources with no handler get passed here
+
+          -- Keep original functionality
+          require('mason-nvim-dap').default_setup(config)
+        end,
+        python = function(config)
+          config.adapters = {
+            type = "executable",
+            command = "/usr/bin/python3",
+            args = {
+              "-m",
+              "debugpy.adapter",
+            },
+          }
+          require('mason-nvim-dap').default_setup(config)   -- don't forget this!
+        end,
       },
     })
   end,
