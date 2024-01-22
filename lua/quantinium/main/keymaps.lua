@@ -12,12 +12,13 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
--- This is going to get me cancelled
-vim.keymap.set("i", "<C-c>", "<Esc>")
-
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+
+-- init.lua or init.vim (Neovim's configuration file)
+vim.api.nvim_set_keymap('x', 'J', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('x', 'K', ":m '>-2<CR>gv=gv", { noremap = true, silent = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -29,3 +30,7 @@ vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { de
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
+
+
+vim.api.nvim_set_keymap('n', '<leader>gf', [[<Cmd>lua require('telescope.builtin').git_files()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sf', [[<Cmd>lua require('telescope.builtin').find_files()<CR>]], { noremap = true, silent = true })
