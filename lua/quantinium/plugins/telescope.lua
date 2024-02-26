@@ -1,6 +1,5 @@
 return {
   "nvim-telescope/telescope.nvim",
-  branch = "0.1.x",
   dependencies = {
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -18,6 +17,8 @@ return {
             ["<C-k>"] = actions.move_selection_previous, -- move to prev result
             ["<C-j>"] = actions.move_selection_next,     -- move to next result
             ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
+            ['<C-u>'] = false,
+            ['<C-d>'] = false,
           },
         },
       },
@@ -36,6 +37,5 @@ return {
     keymap.set('n', '<leader>sg', "<cmd>Telescope live_grep", { desc = '[S]earch by [G]rep' })
     keymap.set('n', '<leader>sd', "<cmd>Telescope diagnostics", { desc = '[S]earch [D]iagnostics' })
     keymap.set('n', '<leader>sr', "<cmd>Telescope resume", { desc = '[S]earch [R]esume' })
-    keymap.set('n', '<leader>cd', "<cmd>Telescope file_browser", { desc = '[C]hange [D]irectory' })
   end,
 }
