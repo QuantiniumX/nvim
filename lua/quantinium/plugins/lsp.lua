@@ -130,6 +130,9 @@ return { -- LSP Configuration & Plugins
     --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+
+    --NOTE
+    -->>  clangd lsp for c, cpp
     local cmp_nvim_lsp = require "cmp_nvim_lsp"
     require("lspconfig").clangd.setup {
       cmd = {
@@ -140,11 +143,51 @@ return { -- LSP Configuration & Plugins
       capabilities = cmp_nvim_lsp.default_capabilities(),
     }
 
+    -->> make lsp
     require 'lspconfig'.autotools_ls.setup {
-      cnd = { "autotools-language-server" },
+      cmd = { "autotools-language-server" },
       filetypes = { "config", "automake", "make" }
     }
+
+    -->> csslsp
+    local css_capabilities = vim.lsp.protocol.make_client_capabilities();
+    css_capabilities.textDocument.completion.completionItem.snippetSupport = true
+    require 'lspconfig'.cssls.setup {
+      capabilities = css_capabilities,
+      cmd = { "vscode-css-language-server", "--stdio" },
+      filetypes = { "css", "scss", "less" },
+      init_options = { provideFormatter = true },
+      settings =
+      {
+        css = {
+          validate = true
+        },
+        less = {
+          validate = true
+        },
+        scss = {
+          validate = true
+        }
+      }
+    }
+
+    require 'lspconfig'.html.setup {
+      capabilities = capabilities,
+      cmd = { "vscode-html-language-server", "--stdio" },
+      filetypes = { "html" },
+      init_options = {
+        configurationSection = { "html", "css", "javascript" },
+        embeddedLanguages = {
+          css = true,
+          javascript = true
+        },
+        provideFormatter = true
+      },
+      settings = {},
+      single_file_support = true
+    }
     local servers = {
+
       --   clangd = {
       --     cmd = { "clangd", },
       --     filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
