@@ -28,11 +28,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
-local notify = vim.notify
-vim.notify = function(msg, ...)
-    if msg:match("warning: multiple different client offset_encodings") then
-        return
-    end
+vim.api.nvim_create_user_command('RunLiveServer', function()
+  vim.fn.jobstart('live-server &> /dev/null &', {detach = true})
+end, {})
 
-    notify(msg, ...)
-end
+-- Map the function to <leader>lvs
+vim.keymap.set('n', '<leader>lvs', ':RunLiveServer<CR>', { noremap = true, silent = true })
